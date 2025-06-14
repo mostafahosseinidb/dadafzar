@@ -17,12 +17,12 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Home />} />
-            {/* Add more protected routes here */}
           </Route>
         </Route>
       </Routes>
       <ToastContainer
-        position="top-right"
+        position="bottom-right"
+        
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop
@@ -31,7 +31,8 @@ function App() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme="colored"
+        style={{ fontFamily: "IRANYekanX" }}
       />
     </>
   );

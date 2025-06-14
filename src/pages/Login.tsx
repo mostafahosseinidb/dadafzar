@@ -24,9 +24,9 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
   }, []);
 
@@ -39,23 +39,24 @@ const Login: React.FC = () => {
         nationalId: values.nationalId,
         phoneNumber: values.phoneNumber,
       });
-      
+
       navigate("/otp-verify", {
         state: {
           phoneNumber: values.phoneNumber,
-          nationalId: values.nationalId
-        }
+          nationalId: values.nationalId,
+        },
       });
       toast.success(response?.data?.message);
     } catch (error: unknown) {
-      let message = "خطایی رخ داده است. لطفا دوباره تلاش کنید.";
-      if (error && typeof error === "object" && "response" in error) {
-        // @ts-expect-error: dynamic error shape from axios
-        message = error.response?.data?.message || error.message || message;
-      } else if (error instanceof Error) {
-        message = error.message;
-      }
-      toast.error(message);
+      console.log("error", error);
+      // let message = "خطایی رخ داده است. لطفا دوباره تلاش کنید.";
+      // if (error && typeof error === "object" && "response" in error) {
+      //   // @ts-expect-error: dynamic error shape from axios
+      //   message = error.response?.data?.message || error.message || message;
+      // } else if (error instanceof Error) {
+      //   message = error.message;
+      // }
+      // toast.error(message);
     } finally {
       setSubmitting(false);
     }
@@ -96,11 +97,15 @@ const Login: React.FC = () => {
                     name="phoneNumber"
                     placeholder="شماره همراه را وارد کنید"
                     className={`self-stretch h-12 p-2.5 bg-[#F4F6F9] rounded-[10px] text-right ${
-                      errors.phoneNumber && touched.phoneNumber ? "border border-red-500" : ""
+                      errors.phoneNumber && touched.phoneNumber
+                        ? "border border-red-500"
+                        : ""
                     }`}
                   />
                   {errors.phoneNumber && touched.phoneNumber && (
-                    <div className="text-red-500 text-sm mt-1">{errors.phoneNumber}</div>
+                    <div className="text-red-500 text-sm mt-1">
+                      {errors.phoneNumber}
+                    </div>
                   )}
                 </div>
                 <div className="w-[378px] flex flex-col justify-center items-end gap-0.5">
@@ -112,16 +117,22 @@ const Login: React.FC = () => {
                     name="nationalId"
                     placeholder="کد ملی را وارد کنید"
                     className={`self-stretch h-12 p-2.5 bg-[#F4F6F9] rounded-[10px] text-right ${
-                      errors.nationalId && touched.nationalId ? "border border-red-500" : ""
+                      errors.nationalId && touched.nationalId
+                        ? "border border-red-500"
+                        : ""
                     }`}
                   />
                   {errors.nationalId && touched.nationalId && (
-                    <div className="text-red-500 text-sm mt-1">{errors.nationalId}</div>
+                    <div className="text-red-500 text-sm mt-1">
+                      {errors.nationalId}
+                    </div>
                   )}
                 </div>
               </div>
               <div className="text-right justify-start">
-                <span className="text-[#F3084E] text-sm font-medium">توجه:</span>
+                <span className="text-[#F3084E] text-sm font-medium">
+                  توجه:
+                </span>
                 <span className="text-Black text-sm font-medium">
                   {" "}
                   کدملی و شماره همراه باید متعلق به یک نفر باشد

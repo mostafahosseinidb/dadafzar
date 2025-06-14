@@ -175,7 +175,7 @@ const OtpVerify: React.FC = () => {
               <button
                 onClick={handleResendCode}
                 disabled={isLoading}
-                className="text-right justify-start text-Cerulean-Blue-700 text-base font-medium px-0 bg-transparent leading-[27px] disabled:opacity-50 hover:outline-none hover:border-none"
+                className="text-right justify-start text-Cerulean-Blue-700 text-base font-medium px-0 bg-transparent leading-[27px] disabled:opacity-50 hover:outline-none hover:border-none cursor-pointer"
               >
                 ارسال مجدد کد
               </button>
