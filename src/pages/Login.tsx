@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../api/auth";
 import { toast } from "react-toastify";
@@ -23,21 +23,39 @@ const validationSchema = Yup.object().shape({
 const Login: React.FC = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/dashboard');
+    }
+  }, []);
+
   const handleSubmit = async (
     values: LoginFormValues,
     { setSubmitting }: FormikHelpers<LoginFormValues>
   ) => {
     try {
       const response = await authService.login({
-        phoneNumber: values.phoneNumber,
         nationalId: values.nationalId,
+        phoneNumber: values.phoneNumber,
       });
       
-      toast.success(response.data.message);
-      // After successful OTP request, you might want to navigate to OTP verification page
-      // navigate("/verify-otp");
-    } catch {
-      // Error is handled by axios interceptor
+      navigate("/otp-verify", {
+        state: {
+          phoneNumber: values.phoneNumber,
+          nationalId: values.nationalId
+        }
+      });
+      toast.success(response?.data?.message);
+    } catch (error: unknown) {
+      let message = "خطایی رخ داده است. لطفا دوباره تلاش کنید.";
+      if (error && typeof error === "object" && "response" in error) {
+        // @ts-expect-error: dynamic error shape from axios
+        message = error.response?.data?.message || error.message || message;
+      } else if (error instanceof Error) {
+        message = error.message;
+      }
+      toast.error(message);
     } finally {
       setSubmitting(false);
     }

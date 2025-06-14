@@ -11,9 +11,29 @@ interface LoginResponse {
   status: number;
 }
 
+interface VerifyOtpCredentials {
+  phoneNumber: string;
+  otp: number;
+  nationalId: string;
+}
+
+interface AuthResponse {
+  user: {
+    id: string;
+    nationalId: string;
+    phoneNumber: string;
+  };
+  token: string;
+}
+
 export const authService = {
   login: async (credentials: LoginCredentials): Promise<ApiResponse<LoginResponse>> => {
     const response = await axiosInstance.post<ApiResponse<LoginResponse>>('/v1/auth/user-otp', credentials);
+    return response.data;
+  },
+
+  verifyOtp: async (credentials: VerifyOtpCredentials): Promise<{ token: string }> => {
+    const response = await axiosInstance.post<{ token: string }>('/v1/auth/user-verify-otp', credentials);
     return response.data;
   },
 
