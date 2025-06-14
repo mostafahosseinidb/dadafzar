@@ -17,7 +17,7 @@ function App() {
             <img src={reactLogo} className="h-24 w-24 animate-spin-slow" alt="React logo" />
           </a>
         </div>
-        <h1 className="text-4xl font-bold text-center my-8 text-gray-800">Vite + React</h1>
+        <h1 className="text-4xl font-bold text-center my-8 text-gray-800">ورود با شماره همراه</h1>
         <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6">
           <button
             onClick={() => setCount((count) => count + 1)}
