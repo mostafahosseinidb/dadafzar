@@ -1,14 +1,15 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const baseURL = import.meta.env.VITE_API_URL || 'https://stg-service.dadafzar.com/api';
 
 const axiosInstance = axios.create({
   baseURL,
   headers: {
     'Content-Type': 'application/json',
-    'client-id': import.meta.env.VITE_CLIENT_ID,
-    'client-secret': import.meta.env.VITE_CLIENT_SECRET,
+    'client-id': import.meta.env.VITE_CLIENT_ID || '686112f3a12eff654bf02be9',
+    'client-secret': import.meta.env.VITE_CLIENT_SECRET || 'ba5e1ae28f51f7e835e2a4dd4a35b2878b31740ccc6a5ff5f39e2b3d56435f19',
+    'Origin': 'panel.dadafzar.com',
   },
 });
 

@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 const OTP_LENGTH = 6;
 
 interface LocationState {
-  phoneNumber: string;
-  nationalId: string;
+  mobileNumber: string;
+  nationalCode: string;
 }
 
 const OtpVerify: React.FC = () => {
@@ -16,9 +16,14 @@ const OtpVerify: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
+
+  // Function to set ref
+  const setInputRef = (index: number) => (el: HTMLInputElement | null) => {
+    inputRefs.current[index] = el;
+  };
   const navigate = useNavigate();
   const location = useLocation();
-  const { phoneNumber, nationalId } = (location.state as LocationState) || {};
+  const { mobileNumber, nationalCode } = (location.state as LocationState) || {};
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,11 +33,11 @@ const OtpVerify: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!phoneNumber || !nationalId) {
+    if (!mobileNumber || !nationalCode) {
       setError("اطلاعات کاربری یافت نشد. لطفا دوباره وارد شوید.");
       navigate("/login");
     }
-  }, [phoneNumber, nationalId, navigate]);
+  }, [mobileNumber, nationalCode, navigate]);
 
   useEffect(() => {
     if (timer > 0) {
@@ -41,13 +46,20 @@ const OtpVerify: React.FC = () => {
     }
   }, [timer]);
 
+
+
   const handleChange = (index: number, value: string) => {
     if (!/^[0-9]?$/.test(value)) return;
+    
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
-    if (value && index < OTP_LENGTH - 1) {
-      inputRefs.current[index + 1]?.focus();
+    console.log(index,value);
+    // Move focus to next input if there's a value and not the last input
+    if (value && index < OTP_LENGTH ) {
+      setTimeout(() => {
+        inputRefs.current[index - 1]?.focus();
+      }, 10);
     }
   };
 
@@ -56,7 +68,7 @@ const OtpVerify: React.FC = () => {
     e: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
-      inputRefs.current[index - 1]?.focus();
+      inputRefs.current[index + 1]?.focus();
     }
   };
 
@@ -67,8 +79,8 @@ const OtpVerify: React.FC = () => {
 
       const response = await authService.verifyOtp({
         otp: parseInt(otpCode),
-        phoneNumber,
-        nationalId,
+        mobileNumber,
+        fromLogin:true,
       });
       console.log("Full response:", response);
       if (response?.token) {
@@ -87,7 +99,7 @@ const OtpVerify: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const otpCode = otp.join("");
+    const otpCode = otp.reverse().join("");
 
     if (otpCode.length !== OTP_LENGTH) {
       setError("Please enter the complete verification code");
@@ -114,11 +126,15 @@ const OtpVerify: React.FC = () => {
       setIsLoading(true);
       setError(null);
       const response = await authService.login({
-        nationalId,
-        phoneNumber,
+        nationalCode,
+        mobileNumber,
       });
       setTimer(85); // Reset timer
-      toast.success(response?.data?.message);
+      if ('data' in response) {
+        toast.success(response.data.message);
+      } else {
+        toast.success('کد تایید ارسال شد');
+      }
     } catch (err) {
       setError("خطا در ارسال مجدد کد. لطفا دوباره تلاش کنید.");
       console.error("Resend code error:", err);
@@ -128,28 +144,28 @@ const OtpVerify: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-full relative bg-white flex flex-row items-center justify-center gap-5">
+    <div className="relative flex flex-row items-center justify-center w-full h-screen gap-5 bg-white">
       <div className="w-[660px] h-[612px] bg-black/20 rounded-[20px] overflow-hidden">
         <img
           src="/image/loginImage.png"
           alt=""
-          className="w-full h-full object-cover"
+          className="object-cover w-full h-full"
         />
       </div>
       <div className="w-[600px] flex flex-col items-center justify-center">
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col items-center gap-6 w-full"
+          className="flex flex-col items-center w-full gap-6"
         >
-          <div className="text-2xl font-bold text-center mb-2">دریافت کد</div>
-          <div className="text-base text-Dove-Gray-500 text-center mb-4">
+          <div className="mb-2 text-2xl font-bold text-center">دریافت کد</div>
+          <div className="mb-4 text-base text-center text-Dove-Gray-500">
             لطفا کد ارسال شده به تلفن همراهتان را وارد کنید.
           </div>
-          <div className="flex flex-row justify-center items-center gap-4 mb-2">
+          <div className="flex flex-row items-center justify-center gap-4 mb-2">
             {otp.map((digit, idx) => (
               <input
                 key={idx}
-                ref={(el) => (inputRefs.current[idx] = el)}
+                ref={setInputRef(idx)}
                 type="text"
                 inputMode="numeric"
                 maxLength={1}
@@ -167,7 +183,7 @@ const OtpVerify: React.FC = () => {
           >
             {isLoading ? "در حال بررسی..." : "ورود"}
           </button>
-          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
+          {error && <div className="mt-2 text-sm text-red-500">{error}</div>}
           <div className="flex flex-row justify-between items-center w-[448px] mt-2 ">
             {timer > 0 ? (
               <span className="text-sm text-gray-500">{formatTime(timer)}</span>
@@ -185,7 +201,7 @@ const OtpVerify: React.FC = () => {
               className="flex justify-start items-center gap-[11px] !bg-transparent !px-0"
               onClick={handleChangePhone}
             >
-              <div className="text-right justify-start text-Black text-sm font-medium ">
+              <div className="justify-start text-sm font-medium text-right text-Black ">
                 تغییر شماره همراه
               </div>
               <svg

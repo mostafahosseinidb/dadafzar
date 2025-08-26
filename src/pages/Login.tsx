@@ -7,15 +7,15 @@ import type { FormikHelpers } from "formik";
 import * as Yup from "yup";
 
 interface LoginFormValues {
-  phoneNumber: string;
-  nationalId: string;
+  mobileNumber: string;
+  nationalCode: string;
 }
 
 const validationSchema = Yup.object().shape({
-  phoneNumber: Yup.string()
+  mobileNumber: Yup.string()
     .required("شماره همراه الزامی است")
     .matches(/^09[0-9]{9}$/, "شماره همراه باید با ۰۹ شروع شود و ۱۱ رقم باشد"),
-  nationalId: Yup.string()
+  nationalCode: Yup.string()
     .required("کد ملی الزامی است")
     .matches(/^[0-9]{10}$/, "کد ملی باید ۱۰ رقم باشد"),
 });
@@ -36,17 +36,21 @@ const Login: React.FC = () => {
   ) => {
     try {
       const response = await authService.login({
-        nationalId: values.nationalId,
-        phoneNumber: values.phoneNumber,
+        nationalCode: values.nationalCode,
+        mobileNumber: values.mobileNumber,
       });
-
+      console.log("response", values.nationalCode, values.mobileNumber);
       navigate("/otp-verify", {
         state: {
-          phoneNumber: values.phoneNumber,
-          nationalId: values.nationalId,
+          mobileNumber: values.mobileNumber,
+          nationalCode: values.nationalCode,
         },
       });
-      toast.success(response?.data?.message);
+      if ("data" in response) {
+        toast.success(response.data.message);
+      } else {
+        toast.success("کد تایید به شماره موبایل شما ارسال شد");
+      }
     } catch (error: unknown) {
       console.log("error", error);
       // let message = "خطایی رخ داده است. لطفا دوباره تلاش کنید.";
@@ -63,77 +67,70 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-full relative bg-white flex flex-row items-center justify-center gap-5">
-      <div className="w-[632px] h-[612px] bg-black/20 rounded-[20px] overflow-hidden">
-        <img
-          src="/image/loginImage.png"
-          alt=""
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <div className="relative flex flex-row items-center justify-center w-full h-screen gap-5 bg-white">
       <div className="w-[700px]">
         <Formik
-          initialValues={{ phoneNumber: "", nationalId: "" }}
+          initialValues={{ mobileNumber: "", nationalCode: "" }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {({ errors, touched, isSubmitting }) => (
-            <Form className="flex flex-col justify-start items-center gap-3">
-              <div className="flex flex-col justify-start items-center gap-3 mb-2">
-                <div className="text-right justify-start text-Black text-2xl font-bold">
+            <Form className="flex flex-col items-center justify-start gap-3">
+              <div className="flex flex-col items-center justify-start gap-3 mb-2">
+                <div className="justify-start text-2xl font-bold text-right text-black">
                   ورود با شماره همراه
                 </div>
                 <div className="text-right justify-start text-Dove-Gray-500 text-base font-medium leading-[27px]">
                   برای ورود و ثبت نام شماره همراه و کدملی خود را واردنمایید
                 </div>
               </div>
-              <div className="flex flex-col justify-start items-start gap-3">
-                <div className="w-[378px] flex flex-col justify-center items-end gap-0.5">
-                  <div className="justify-start text-Dove-Gray-500 text-sm font-medium">
+              <div className="flex flex-col items-start justify-start gap-3">
+                <div className="w-[378px] flex flex-col justify-center items-start gap-0.5">
+                  <div className="text-sm font-medium text-right text-Dove-Gray-500">
                     شماره همراه
                   </div>
                   <Field
                     type="tel"
-                    name="phoneNumber"
+                    name="mobileNumber"
                     placeholder="شماره همراه را وارد کنید"
                     className={`self-stretch h-12 p-2.5 bg-[#F4F6F9] rounded-[10px] text-right ${
-                      errors.phoneNumber && touched.phoneNumber
+                      errors.mobileNumber && touched.mobileNumber
                         ? "border border-red-500"
                         : ""
                     }`}
                   />
-                  {errors.phoneNumber && touched.phoneNumber && (
-                    <div className="text-red-500 text-sm mt-1">
-                      {errors.phoneNumber}
+                  {errors.mobileNumber && touched.mobileNumber && (
+                    <div className="mt-1 text-sm text-red-500">
+                      {errors.mobileNumber}
                     </div>
                   )}
                 </div>
-                <div className="w-[378px] flex flex-col justify-center items-end gap-0.5">
-                  <div className="justify-start text-Dove-Gray-500 text-sm font-medium">
+                <div className="w-[378px] flex flex-col justify-center items-start gap-0.5">
+                  <div className="justify-start text-sm font-medium text-Dove-Gray-500">
                     کدملی
                   </div>
                   <Field
                     type="text"
-                    name="nationalId"
+                    name="nationalCode"
                     placeholder="کد ملی را وارد کنید"
                     className={`self-stretch h-12 p-2.5 bg-[#F4F6F9] rounded-[10px] text-right ${
-                      errors.nationalId && touched.nationalId
+                      errors.nationalCode && touched.nationalCode
                         ? "border border-red-500"
                         : ""
                     }`}
                   />
-                  {errors.nationalId && touched.nationalId && (
-                    <div className="text-red-500 text-sm mt-1">
-                      {errors.nationalId}
+                  {errors.nationalCode && touched.nationalCode && (
+                    <div className="mt-1 text-sm text-red-500">
+                      {errors.nationalCode}
                     </div>
                   )}
                 </div>
               </div>
-              <div className="text-right justify-start">
+              <div className="justify-start text-right">
                 <span className="text-[#F3084E] text-sm font-medium">
                   توجه:
                 </span>
-                <span className="text-Black text-sm font-medium">
+                <span className="text-sm font-medium text-Black">
                   {" "}
                   کدملی و شماره همراه باید متعلق به یک نفر باشد
                 </span>
@@ -150,6 +147,13 @@ const Login: React.FC = () => {
             </Form>
           )}
         </Formik>
+      </div>
+      <div className="w-[632px] h-[612px] bg-black/20 rounded-[20px] overflow-hidden">
+        <img
+          src="/image/loginImage.png"
+          alt=""
+          className="object-cover w-full h-full"
+        />
       </div>
     </div>
   );

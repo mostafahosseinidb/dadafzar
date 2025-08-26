@@ -65,12 +65,14 @@ export default {
           900: '#4D5162',
           950: '#2D2F39',
         },
+        // Custom semantic colors
         info: '#1842CC',
         error: '#F3084E',
         success: '#05CD8E',
         warning: '#F8C017',
         white: '#FFFFFF',
         black: '#161616',
+        customBlack: '#161616', // Renamed to avoid conflict with default black
         warningLight: '#FFEDC7',
         successLight: '#CEFFF0',
         errorLight: '#FFD5E2',
