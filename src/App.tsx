@@ -7,6 +7,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
 import OtpVerify from "./pages/OtpVerify";
 import Declaration from "./pages/Declaration";
+import UserAuthorization from "./pages/UserAuthorization";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/otp-verify" element={<OtpVerify />} />
         <Route element={<ProtectedRoute />}>
+          <Route path="/userAuthorization" element={<UserAuthorization />} />
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Home />} />

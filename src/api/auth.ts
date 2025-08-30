@@ -1,30 +1,31 @@
 import axiosInstance from './axios';
 import type { ApiResponse } from './types';
 import { toast } from 'react-toastify';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-interface LoginCredentials {
+export interface LoginCredentials {
   nationalCode: string;
   mobileNumber: string;
 }
 
-interface LoginResponse {
+export interface LoginResponse {
   message: string;
   status: number;
 }
 
-interface LoginErrorResponse {
+export interface LoginErrorResponse {
   userMessage: string;
   userMessageKey: string;
 }
 
-interface VerifyOtpCredentials {
+export interface VerifyOtpCredentials {
   mobileNumber: string;
   otp: number;
   nationalCode?: string;
   fromLogin: boolean;
 }
 
-interface AuthResponse {
+export interface AuthResponse {
   user: {
     id: string;
     nationalCode: string;
@@ -78,4 +79,63 @@ export const authService = {
     const response = await axiosInstance.get<ApiResponse<AuthResponse['user']>>('/auth/me');
     return response.data;
   },
+};
+
+// React Query Hooks for Authentication
+export const useLogin = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: (credentials: LoginCredentials) => authService.login(credentials),
+    onSuccess: () => {
+      // Invalidate any cached user data
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
+};
+
+export const useVerifyOtp = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: (credentials: VerifyOtpCredentials) => authService.verifyOtp(credentials),
+    onSuccess: (data) => {
+      // Store token in localStorage
+      localStorage.setItem('token', data.token);
+      // Invalidate and refetch user data
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
+};
+
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: () => authService.logout(),
+    onSuccess: () => {
+      // Clear all cached data
+      queryClient.clear();
+    },
+  });
+};
+
+export const useCurrentUser = () => {
+  return useQuery({
+    queryKey: ['user', 'current'],
+    queryFn: () => authService.getCurrentUser(),
+    enabled: !!localStorage.getItem('token'), // Only run if token exists
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 10 * 60 * 1000, // 10 minutes
+  });
+};
+
+// Hook to check if user is authenticated
+export const useIsAuthenticated = () => {
+  const { data: user, isLoading, error } = useCurrentUser();
+  return {
+    isAuthenticated: !!user?.data && !error,
+    isLoading,
+    user: user?.data,
+  };
 }; 
