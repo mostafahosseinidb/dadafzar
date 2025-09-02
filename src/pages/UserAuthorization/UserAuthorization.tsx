@@ -5,7 +5,6 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import gregorian from "react-date-object/calendars/gregorian";
 import type { DateObject } from "react-multi-date-picker";
 import Webcam from "react-webcam";
-import * as tf from "@tensorflow/tfjs";
 import { loadLocalBlazeFaceModel, LocalBlazeFaceModel } from "../../utils/localModelLoader";
 import { submitUserAuthorization } from "../../api/userAuthorization";
 import type { UserAuthorizationData } from "../../api/userAuthorization";
@@ -72,16 +71,12 @@ const UserAuthorization: React.FC = () => {
   const recordingIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const faceDetectionIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Initialize TensorFlow.js and load BlazeFace model
+  // Initialize face detection model
   const initializeFaceDetection = useCallback(async () => {
     try {
-      await tf.ready();
-      const model = await loadLocalBlazeFaceModel({
-        modelUrl: '/models/blazeface/model.json',
-        maxFaces: 1,
-        iouThreshold: 0.5,
-        scoreThreshold: 0.3,
-      });
+      console.log("Starting face detection initialization...");
+      const model = await loadLocalBlazeFaceModel();
+      console.log("Face detection model loaded successfully:", model);
       setFaceDetectionModel(model);
       setIsFaceDetectionReady(true);
     } catch (error) {
@@ -119,73 +114,23 @@ const UserAuthorization: React.FC = () => {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
 
-      // Detect faces without landmarks for better performance
-      const predictions = await faceDetectionModel.estimateFaces(video);
-
-      if (predictions.length > 0) {
-        const face = predictions[0];
-
-        // Calculate face center
-        const faceCenter = {
-          x:
-            (face.topLeft as [number, number])[0] +
-            ((face.bottomRight as [number, number])[0] -
-              (face.topLeft as [number, number])[0]) /
-              2,
-          y:
-            (face.topLeft as [number, number])[1] +
-            ((face.bottomRight as [number, number])[1] -
-              (face.topLeft as [number, number])[1]) /
-              2,
-        };
-
-        // Calculate center circle - make it larger for easier detection
-        const centerCircle = {
-          x: canvas.width / 2,
-          y: canvas.height / 2,
-          radius: Math.min(canvas.width, canvas.height) * 0.25,
-        };
-
-        // Check if face is in center - using relative positioning
-        const frameWidth = canvas.width;
-        const frameHeight = canvas.height;
-        const faceWidth =
-          (face.bottomRight as [number, number])[0] -
-          (face.topLeft as [number, number])[0];
-
-        // Calculate relative face center (0-1 range)
-        const relativeFaceCenterX = faceCenter.x / frameWidth;
-        const relativeFaceCenterY = faceCenter.y / frameHeight;
-
-        // Check if face is in center area (50% of frame center) - more generous
-        const centerAreaX = 0.25; // 25% from each side (50% center)
-        const centerAreaY = 0.25; // 25% from each side (50% center)
-
-        const isInCenter =
-          relativeFaceCenterX >= centerAreaX &&
-          relativeFaceCenterX <= 1 - centerAreaX &&
-          relativeFaceCenterY >= centerAreaY &&
-          relativeFaceCenterY <= 1 - centerAreaY;
-
-        setFaceInCenter(isInCenter);
-
-        // Update head rotation progress for center
-        if (isInCenter) {
+      // Use the new head rotation detection method
+      const headRotationResult = await faceDetectionModel.detectHeadRotation(video);
+      
+      if (headRotationResult.pose) {
+        // Update head rotation progress based on pose detection
+        if (headRotationResult.isCenter) {
           setHeadRotationProgress((prev) => ({ ...prev, center: true }));
+          setFaceInCenter(true);
+        } else {
+          setFaceInCenter(false);
         }
 
-        // Head rotation detection using face position
-        const frameCenterX = canvas.width / 2;
-        const faceCenterX =
-          (face.topLeft as [number, number])[0] + faceWidth / 2;
-
-        // Check left rotation (face moves to right side of frame) - 10% threshold
-        if (faceCenterX > frameCenterX + faceWidth * 0.2) {
+        if (headRotationResult.isLeft) {
           setHeadRotationProgress((prev) => ({ ...prev, left: true }));
         }
 
-        // Check right rotation (face moves to left side of frame) - 10% threshold
-        if (faceCenterX < frameCenterX - faceWidth * 0.2) {
+        if (headRotationResult.isRight) {
           setHeadRotationProgress((prev) => ({ ...prev, right: true }));
         }
 
@@ -203,7 +148,13 @@ const UserAuthorization: React.FC = () => {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
 
           // Draw center circle
-          ctx.strokeStyle = isInCenter ? "#10B981" : "#EF4444";
+          const centerCircle = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            radius: Math.min(canvas.width, canvas.height) * 0.25,
+          };
+
+          ctx.strokeStyle = headRotationResult.isCenter ? "#10B981" : "#EF4444";
           ctx.lineWidth = 3;
           ctx.beginPath();
           ctx.arc(
@@ -215,29 +166,19 @@ const UserAuthorization: React.FC = () => {
           );
           ctx.stroke();
 
-          // Draw face center point
-          ctx.fillStyle = isInCenter ? "#10B981" : "#EF4444";
-          ctx.beginPath();
-          ctx.arc(faceCenter.x, faceCenter.y, 5, 0, 2 * Math.PI);
-          ctx.fill();
+          // Draw pose information
+          ctx.fillStyle = "#000";
+          ctx.font = "16px Arial";
+          ctx.textAlign = "left";
+          ctx.fillText(`Yaw: ${headRotationResult.pose.yaw.toFixed(1)}°`, 10, 30);
+          ctx.fillText(`Roll: ${headRotationResult.pose.roll.toFixed(1)}°`, 10, 50);
+          ctx.fillText(`Pitch: ${headRotationResult.pose.pitch.toFixed(1)}°`, 10, 70);
 
-          // Draw face bounding box
-          ctx.strokeStyle = isInCenter ? "#10B981" : "#EF4444";
-          ctx.lineWidth = 2;
-          ctx.strokeRect(
-            (face.topLeft as [number, number])[0],
-            (face.topLeft as [number, number])[1],
-            (face.bottomRight as [number, number])[0] -
-              (face.topLeft as [number, number])[0],
-            (face.bottomRight as [number, number])[1] -
-              (face.topLeft as [number, number])[1]
-          );
-
-          // Draw face center indicator
-          ctx.fillStyle = "#FFD700";
-          ctx.beginPath();
-          ctx.arc(faceCenter.x, faceCenter.y, 5, 0, 2 * Math.PI);
-          ctx.fill();
+          // Draw rotation status
+          ctx.fillStyle = headRotationResult.isCenter ? "#10B981" : "#EF4444";
+          ctx.fillText(`Center: ${headRotationResult.isCenter ? "✅" : "❌"}`, 10, 100);
+          ctx.fillText(`Left: ${headRotationResult.isLeft ? "✅" : "⭕"}`, 10, 120);
+          ctx.fillText(`Right: ${headRotationResult.isRight ? "✅" : "⭕"}`, 10, 140);
         }
       } else {
         setFaceInCenter(false);
@@ -266,6 +207,12 @@ const UserAuthorization: React.FC = () => {
               2 * Math.PI
             );
             ctx.stroke();
+
+            // Draw "No Face Detected" message
+            ctx.fillStyle = "#EF4444";
+            ctx.font = "20px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("چهره تشخیص داده نشد", canvas.width / 2, canvas.height / 2 + 50);
           }
         }
       }
@@ -284,8 +231,8 @@ const UserAuthorization: React.FC = () => {
       faceDetectionModel &&
       isRecording
     ) {
-      // Start face detection every 200ms for better performance
-      const interval = setInterval(detectFaceInCenter, 200);
+      // Start face detection every 100ms for better performance and responsiveness
+      const interval = setInterval(detectFaceInCenter, 100);
       faceDetectionIntervalRef.current = interval;
 
       return () => {
@@ -1182,8 +1129,12 @@ const UserAuthorization: React.FC = () => {
                 </li>
                 <li>• نور کافی داشته باشید و رو به روی دوربین بایستید</li>
                 <li>
-                  • برای تکمیل احراز هویت، سر خود را به سمت چپ و راست بچرخانید
+                  • برای تکمیل احراز هویت، مراحل زیر را انجام دهید:
                 </li>
+                <li className="mr-4">1️⃣ ابتدا صورت خود را در مرکز قرار دهید</li>
+                <li className="mr-4">2️⃣ سر خود را به سمت چپ بچرخانید (حداقل 12 درجه)</li>
+                <li className="mr-4">3️⃣ سر خود را به سمت راست بچرخانید (حداقل 12 درجه)</li>
+                <li className="mr-4">4️⃣ صورت خود را دوباره در مرکز قرار دهید</li>
                 <li>
                   • سیستم پیشرفت شما را نمایش می‌دهد و پس از تکمیل اطلاع می‌دهد
                 </li>
@@ -1216,7 +1167,7 @@ const UserAuthorization: React.FC = () => {
                 ></path>
               </svg>
               <span className="text-sm text-yellow-700">
-                در حال بارگذاری مدل تشخیص چهره TensorFlow.js...
+                در حال بارگذاری مدل تشخیص چهره face-api.js...
               </span>
             </div>
           </div>

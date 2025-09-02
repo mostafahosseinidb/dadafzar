@@ -92,8 +92,7 @@ export const submitUserAuthorization = async (
     formData.append('mobile', data.mobileNumber);
 
     // Use the correct API endpoint
-    console.log('Making API call to:', '/v1/userpanel/kyc');
-    console.log('FormData contents:');
+ 
     for (const [key, value] of formData.entries()) {
       console.log(`${key}:`, value instanceof Blob ? `Blob (${value.size} bytes, ${value.type})` : value);
     }
