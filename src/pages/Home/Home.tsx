@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
   return (
@@ -78,32 +79,32 @@ const Home: React.FC = () => {
             تمپلیت‌های شما
           </div>
           <div className="self-stretch inline-flex justify-start items-center gap-[15px]">
-            <div className="w-[172px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden">
+            <Link to="/declare" className="w-[172px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
               <div className="text-center justify-start text-Black text-sm font-medium ">
                 ثبت اظهارنامه مطالبه طلب
               </div>
-            </div>
-            <div className="w-[173px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden">
+            </Link>
+            <Link to="/declare" className="w-[173px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
               <div className=" text-center justify-start text-Black text-sm font-medium ">
                 ثبت اظهارنامه
                 <br />
                 الزام به به انجام تعهدات
               </div>
-            </div>
-            <div className="w-[173px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden">
+            </Link>
+            <Link to="/declare" className="w-[173px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
               <div className="text-center justify-start text-Black text-sm font-medium ">
                 ثبت اظهارنامه
                 <br />
                 خام
               </div>
-            </div>
-            <div className="w-[173px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden">
+            </Link>
+            <Link to="/declare" className="w-[173px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
               <div className="text-center justify-start text-Black text-sm font-medium ">
                 ثبت اظهارنامه
                 <br />
                 خام
               </div>
-            </div>
+            </Link>
 
             <div className="w-[172px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-2 outline-offset-[-2px] outline-Tropical-Blue-900 overflow-hidden">
               <div className=" inline-flex justify-start items-center gap-2">

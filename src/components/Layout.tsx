@@ -10,7 +10,7 @@ const Layout: React.FC = () => {
     <div className="min-h-screen bg-gray-50 flex flex-row  pr-[326px]">
       {/* Header or Sidebar can go here */}
 
-      <aside className="fixed top-0 bottom-0 right-0 w-[326px] border-l border-StormGray-200 bg-white flex flex-col justify-start items-center">
+      <aside className="fixed top-0 bottom-0 right-0 w-[326px] border-r border-StormGray-200 bg-white flex flex-col justify-start items-center">
         <div className="mt-11 mb-9">
           <img className=" h-[40px] " src="/image/logo.png" />
         </div>
@@ -27,7 +27,7 @@ const Layout: React.FC = () => {
               width="24"
               height="24"
               viewBox="0 0 24 24"
-              className="w-4 h-4 text-white rotate-90"
+              className="w-4 h-4 text-white -rotate-90"
             >
               <path
                 fill="currentColor"
@@ -55,7 +55,7 @@ const Layout: React.FC = () => {
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
-                className="w-4 h-4 rotate-90"
+                className="w-4 h-4 -rotate-90"
               >
                 <path
                   fill="currentColor"
@@ -66,7 +66,7 @@ const Layout: React.FC = () => {
               </svg>
             </Link>
             <Link
-              to={""}
+              to="/declare"
               className="self-stretch p-2.5 inline-flex justify-between items-center"
             >
               <div className="justify-start text-sm font-medium text-center text-Black ">
@@ -77,7 +77,7 @@ const Layout: React.FC = () => {
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
-                className="w-4 h-4 rotate-90"
+                className="w-4 h-4 -rotate-90"
               >
                 <path
                   fill="currentColor"
@@ -99,7 +99,7 @@ const Layout: React.FC = () => {
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
-                className="w-4 h-4 rotate-90"
+                className="w-4 h-4 -rotate-90"
               >
                 <path
                   fill="currentColor"
@@ -201,14 +201,14 @@ const Layout: React.FC = () => {
                 strokeLinejoin="round"
               />
               <path
-                d="M16 17L21 12L16 7"
+                d="M8 17L3 12L8 7"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
               <path
-                d="M21 12H9"
+                d="M3 12H15"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
@@ -219,7 +219,7 @@ const Layout: React.FC = () => {
         </nav>
       </aside>
       <section className="w-full bg-stormGray-100">
-        <header className="sticky top-0 right-0 left-0 w-full z-50  px-[58px] py-3.5 bg-white border-b border-Storm-Gray-200 inline-flex justify-between items-center">
+        <header className="sticky top-0 left-0 right-0 w-full z-50  px-[58px] py-3.5 bg-white border-b border-Storm-Gray-200 inline-flex justify-between items-center">
           <div className="flex items-center justify-start gap-4">
             <div className="flex justify-start items-center gap-2.5">
               <div className="p-2 bg-[#2a5fcb] rounded-[10px] inline-flex justify-start items-center gap-2.5">
@@ -270,7 +270,7 @@ const Layout: React.FC = () => {
                     <path
                       fill="#000"
                       fillRule="evenodd"
-                      d="M15.488 4.43a.75.75 0 0 1 .081 1.058L9.988 12l5.581 6.512a.75.75 0 1 1-1.138.976l-6-7a.75.75 0 0 1 0-.976l6-7a.75.75 0 0 1 1.057-.081"
+                      d="M8.512 4.43a.75.75 0 0 0-.081 1.058L14.012 12l-5.581 6.512a.75.75 0 1 0 1.138.976l6-7a.75.75 0 0 0 0-.976l-6-7a.75.75 0 0 0-1.057-.081"
                       clipRule="evenodd"
                     />
                   </svg>
@@ -280,11 +280,11 @@ const Layout: React.FC = () => {
           </div>
           <div className="flex items-center justify-start gap-5">
             <div className="p-2.5 bg-stormGray-50 rounded-[10px] flex justify-start items-center gap-3.5">
-              <p className="flex justify-center items-center gap-2.5">
-                <div className="justify-start text-sm font-medium text-black ">
+              <div className="flex justify-center items-center gap-2.5">
+                <span className="justify-start text-sm font-medium text-black ">
                   شرکت مینو دشت گلستان
-                </div>
-              </p>
+                </span>
+              </div>
 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -298,7 +298,7 @@ const Layout: React.FC = () => {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="1.5"
-                  d="m19 9l-7 6l-7-6"
+                  d="m5 9l7 6l7-6"
                 />
               </svg>
             </div>
@@ -382,14 +382,14 @@ const Layout: React.FC = () => {
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M16 17L21 12L16 7"
+                  d="M8 17L3 12L8 7"
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M21 12H9"
+                  d="M3 12H15"
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"

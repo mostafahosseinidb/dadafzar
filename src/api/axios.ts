@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json',
     'client-id': import.meta.env.VITE_CLIENT_ID || '686112f3a12eff654bf02be9',
     'client-secret': import.meta.env.VITE_CLIENT_SECRET || 'ba5e1ae28f51f7e835e2a4dd4a35b2878b31740ccc6a5ff5f39e2b3d56435f19',
-    'Origin': 'panel.dadafzar.com',
+    // 'Origin': 'panel.dadafzar.com',
   },
 });
 

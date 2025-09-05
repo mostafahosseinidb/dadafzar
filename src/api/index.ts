@@ -1,6 +1,7 @@
 // Export all API services and hooks
 export * from './auth';
 export * from './kyc';
+export * from './declaration';
 export * from './types';
 export * from './axios';
 

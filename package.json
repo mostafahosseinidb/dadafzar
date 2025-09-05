@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@fontsource/vazirmatn": "^5.2.6",
+    "@iconify/react": "^6.0.1",
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/drawing_utils": "^0.3.1675466124",
     "@mediapipe/face_detection": "^0.4.1646425229",
