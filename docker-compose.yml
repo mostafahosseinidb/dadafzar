@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  dad-afzar:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    container_name: dad-afzar-app
+    environment:
+      - NODE_ENV=production
