@@ -5,7 +5,7 @@ import DeclarationLayout from '../../components/DeclarationLayout';
 
 const Step6: React.FC = () => {
   const navigate = useNavigate();
-  const { declarationData, updateDeclarationData } = useDeclaration();
+  const { declarationData } = useDeclaration();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Configurable parameters

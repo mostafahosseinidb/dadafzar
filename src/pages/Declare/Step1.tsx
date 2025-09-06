@@ -443,11 +443,11 @@ const Step1: React.FC = () => {
                       </option>
                     ))}
                   </select>
-                  <div className="w-[18px] h-[18px] flex items-center justify-center">
+                  {/* <div className="w-[18px] h-[18px] flex items-center justify-center">
                     <svg className="w-4 h-4 text-doveGray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 9l-7 7-7-7" />
                     </svg>
-                  </div>
+                  </div> */}
                 </div>
                 {errors.ceoGender && (
                   <div className="text-xs text-error">{errors.ceoGender}</div>
@@ -543,11 +543,11 @@ const Step1: React.FC = () => {
                       </option>
                     )) : null}
                   </select>
-                  <div className="w-[18px] h-[18px] flex items-center justify-center">
+                  {/* <div className="w-[18px] h-[18px] flex items-center justify-center">
                     <svg className="w-4 h-4 text-doveGray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 9l-7 7-7-7" />
                     </svg>
-                  </div>
+                  </div> */}
                 </div>
                 {errors.judicialOffice && (
                   <div className="text-xs text-error">{errors.judicialOffice}</div>

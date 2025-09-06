@@ -4,18 +4,18 @@ import { Link } from "react-router-dom";
 const Home: React.FC = () => {
   return (
     <div className="min-h-screen p-8">
-      <div className="w-[924px] mx-auto flex flex-col justify-center items-center gap-10">
-        <div className="self-stretch inline-flex justify-start items-center gap-5">
-          <div className="w-[492px] inline-flex flex-col justify-start items-start gap-5">
+      <div className="flex flex-col items-center justify-center w-full gap-10 mx-auto ">
+        <div className="inline-flex items-center self-stretch justify-start w-full gap-5">
+          <div className="inline-flex flex-col items-start justify-start w-full gap-5">
             <div className="self-stretch h-[164px] relative bg-white rounded-[15px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-[10px] outline-offset-[-10px] outline-white overflow-hidden">
               <img
-                className="w-[492px] h-[275px] left-0 top-[-74px] absolute"
+                className=" h-[275px] left-0 top-[-74px] absolute"
                 src="/image/loginImage.png"
                 alt="Dashboard preview"
               />
             </div>
-            <div className="self-stretch inline-flex justify-start items-center gap-6">
-              <div className="w-[233px] h-[124px] py-3.5 bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 inline-flex flex-col justify-between items-center">
+            <div className="inline-flex items-center self-stretch justify-start w-full gap-6">
+              <div className="w-full h-[124px] py-3.5 bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 inline-flex flex-col justify-between items-center">
                 <div className="inline-flex justify-center items-center gap-2.5">
                   <svg
                     width="33"
@@ -30,7 +30,7 @@ const Home: React.FC = () => {
                     />
                   </svg>
 
-                  <div className="text-right justify-start text-black text-sm font-medium ">
+                  <div className="justify-start text-sm font-medium text-right text-black ">
                     تعــــــــداد
                     <br />
                     اظهارنامه‌‌ها فعال
@@ -41,7 +41,7 @@ const Home: React.FC = () => {
                   0
                 </div>
               </div>
-              <div className="w-[235px] h-[124px] py-3.5 bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 inline-flex flex-col justify-center items-center gap-2.5">
+              <div className="w-full h-[124px] py-3.5 bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 inline-flex flex-col justify-center items-center gap-2.5">
                 <div className="inline-flex justify-center items-center gap-2.5">
                   <svg
                     width="32"
@@ -67,39 +67,39 @@ const Home: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="w-[412px] h-[308px] relative bg-white rounded-[15px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden">
-            <div className=" justify-start text-black text-sm font-medium p-5 ">
+          <div className=" h-[308px] relative bg-white rounded-[15px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden w-full">
+            <div className="justify-start p-5 text-sm font-medium text-black ">
               آموزش استفاده از پنل
             </div>
             <div className="w-[372px] h-[234px] bg-Storm-Gray-100 rounded-[10px] overflow-hidden" />
           </div>
         </div>
-        <div className="self-stretch flex flex-col justify-start items-end gap-2">
+        <div className="flex flex-col items-end self-stretch justify-start w-full gap-2">
           <div className="self-stretch text-right justify-start text-black text-base font-medium  leading-[27px]">
             تمپلیت‌های شما
           </div>
-          <div className="self-stretch inline-flex justify-start items-center gap-[15px]">
+          <div className="self-stretch inline-flex justify-start items-center gap-[15px] w-full">
             <Link to="/declare" className="w-[172px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-              <div className="text-center justify-start text-Black text-sm font-medium ">
+              <div className="justify-start text-sm font-medium text-center text-Black ">
                 ثبت اظهارنامه مطالبه طلب
               </div>
             </Link>
             <Link to="/declare" className="w-[173px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-              <div className=" text-center justify-start text-Black text-sm font-medium ">
+              <div className="justify-start text-sm font-medium text-center text-Black">
                 ثبت اظهارنامه
                 <br />
                 الزام به به انجام تعهدات
               </div>
             </Link>
             <Link to="/declare" className="w-[173px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-              <div className="text-center justify-start text-Black text-sm font-medium ">
+              <div className="justify-start text-sm font-medium text-center text-Black ">
                 ثبت اظهارنامه
                 <br />
                 خام
               </div>
             </Link>
             <Link to="/declare" className="w-[173px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-1 outline-offset-[-1px] outline-stormGray-200 overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-              <div className="text-center justify-start text-Black text-sm font-medium ">
+              <div className="justify-start text-sm font-medium text-center text-Black ">
                 ثبت اظهارنامه
                 <br />
                 خام
@@ -107,7 +107,7 @@ const Home: React.FC = () => {
             </Link>
 
             <div className="w-[172px] h-[98px] flex items-center justify-center relative bg-white rounded-[10px] shadow-[0px_4px_7.800000190734863px_0px_rgba(38,68,130,0.05)] outline outline-2 outline-offset-[-2px] outline-Tropical-Blue-900 overflow-hidden">
-              <div className=" inline-flex justify-start items-center gap-2">
+              <div className="inline-flex items-center justify-start gap-2 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"

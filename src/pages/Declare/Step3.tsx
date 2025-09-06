@@ -168,7 +168,8 @@ const Step3: React.FC = () => {
 
   const handleSendToOffice = async () => {
     setIsLoading(true);
-    
+    navigate("/declare/step4");
+    return
     try {
       // Save current step3 data to context
       updateDeclarationData({

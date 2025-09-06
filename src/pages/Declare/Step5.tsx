@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDeclaration } from "../../contexts/DeclarationContext";
+import React, { useState } from "react";
 import DeclarationLayout from "../../components/DeclarationLayout";
 
 type Step5State = "awaiting_approval" | "code_sent" | "code_expired";
@@ -19,8 +16,6 @@ const CONFIG = {
 };
 
 const Step5: React.FC = () => {
-  const navigate = useNavigate();
-  const { updateDeclarationData } = useDeclaration();
   const [smsCode, setSmsCode] = useState("");
   const [countdown, setCountdown] = useState(0);
   const [currentState, setCurrentState] =
@@ -56,23 +51,23 @@ const Step5: React.FC = () => {
     }
   };
 
-  const handleVerifyCode = () => {
-    if (smsCode.length === CONFIG.codeLength) {
-      // Here you would typically verify the code with the backend
-      updateDeclarationData({ smsVerified: true });
-      navigate("/declare/step6");
-    }
-  };
+  // const handleVerifyCode = () => {
+  //   if (smsCode.length === CONFIG.codeLength) {
+  //     // Here you would typically verify the code with the backend
+  //     updateDeclarationData({ smsVerified: true });
+  //     navigate("/declare/step6");
+  //   }
+  // };
 
-  const handleNext = () => {
-    if (smsCode.length === CONFIG.codeLength) {
-      handleVerifyCode();
-    }
-  };
+  // const handleNext = () => {
+  //   if (smsCode.length === CONFIG.codeLength) {
+  //     handleVerifyCode();
+  //   }
+  // };
 
-  const handlePrev = () => {
-    navigate("/declare/step4");
-  };
+  // const handlePrev = () => {
+  //   navigate("/declare/step4");
+  // };
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -82,11 +77,11 @@ const Step5: React.FC = () => {
       .padStart(2, "0")}`;
   };
 
-  const getProgressPercentage = () => {
-    if (countdown === 0) return 0;
-    const totalSeconds = CONFIG.codeValidityMinutes * 60;
-    return ((totalSeconds - countdown) / totalSeconds) * 100;
-  };
+  // const getProgressPercentage = () => {
+  //   if (countdown === 0) return 0;
+  //   const totalSeconds = CONFIG.codeValidityMinutes * 60;
+  //   return ((totalSeconds - countdown) / totalSeconds) * 100;
+  // };
 
   const renderNotificationBanner = () => {
     switch (currentState) {

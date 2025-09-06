@@ -10,7 +10,7 @@ const Layout: React.FC = () => {
     <div className="min-h-screen bg-gray-50 flex flex-row  pr-[326px]">
       {/* Header or Sidebar can go here */}
 
-      <aside className="fixed top-0 bottom-0 right-0 w-[326px] border-r border-StormGray-200 bg-white flex flex-col justify-start items-center">
+      <aside className="fixed top-0 bottom-0 right-0 w-[326px] border-l border-StormGray-200 bg-white flex flex-col justify-start items-center">
         <div className="mt-11 mb-9">
           <img className=" h-[40px] " src="/image/logo.png" />
         </div>
@@ -27,7 +27,7 @@ const Layout: React.FC = () => {
               width="24"
               height="24"
               viewBox="0 0 24 24"
-              className="w-4 h-4 text-white -rotate-90"
+              className="w-4 h-4 text-white rotate-90"
             >
               <path
                 fill="currentColor"
@@ -55,7 +55,7 @@ const Layout: React.FC = () => {
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
-                className="w-4 h-4 -rotate-90"
+                className="w-4 h-4 rotate-90"
               >
                 <path
                   fill="currentColor"
@@ -77,7 +77,7 @@ const Layout: React.FC = () => {
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
-                className="w-4 h-4 -rotate-90"
+                className="w-4 h-4 rotate-90"
               >
                 <path
                   fill="currentColor"
@@ -99,7 +99,7 @@ const Layout: React.FC = () => {
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
-                className="w-4 h-4 -rotate-90"
+                className="w-4 h-4 rotate-90"
               >
                 <path
                   fill="currentColor"
@@ -178,7 +178,7 @@ const Layout: React.FC = () => {
           </Link>
 
           {/* Logout Button */}
-          <button
+          {/* <button
             onClick={confirmLogout}
             className="self-stretch p-2.5 bg-red-50 hover:bg-red-100 transition-colors rounded-[10px] inline-flex justify-between items-center text-red-600 hover:text-red-700 mt-auto"
             title="خروج از حساب کاربری"
@@ -215,7 +215,7 @@ const Layout: React.FC = () => {
                 strokeLinejoin="round"
               />
             </svg>
-          </button>
+          </button> */}
         </nav>
       </aside>
       <section className="w-full bg-stormGray-100">
@@ -266,6 +266,7 @@ const Layout: React.FC = () => {
                     width="20"
                     height="20"
                     viewBox="0 0 24 24"
+                    className="rotate-180"
                   >
                     <path
                       fill="#000"
@@ -367,6 +368,8 @@ const Layout: React.FC = () => {
               className="p-2.5 bg-red-50 hover:bg-red-100 transition-colors rounded-[10px] flex items-center gap-2 text-red-600 hover:text-red-700"
               title="خروج از حساب کاربری"
             >
+          
+              <span className="text-sm font-medium">خروج</span>
               <svg
                 width="20"
                 height="20"
@@ -396,7 +399,6 @@ const Layout: React.FC = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span className="text-sm font-medium">خروج</span>
             </button>
           </div>
         </header>

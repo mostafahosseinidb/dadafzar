@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const PaymentSuccess: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [countdown, setCountdown] = useState(10);
 
   // Get payment data from location state
   const paymentData = location.state || {
@@ -16,19 +14,19 @@ const PaymentSuccess: React.FC = () => {
     mobile: "09330217284"
   };
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown(prev => {
-        if (prev <= 1) {
-          navigate("/declare/step5");
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setCountdown(prev => {
+  //       if (prev <= 1) {
+  //         navigate("/declare/step5");
+  //         return 0;
+  //       }
+  //       return prev - 1;
+  //     });
+  //   }, 1000);
 
-    return () => clearInterval(timer);
-  }, [navigate]);
+  //   return () => clearInterval(timer);
+  // }, [navigate]);
 
   const handleContinue = () => {
     navigate("/declare/step5");

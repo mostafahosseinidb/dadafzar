@@ -187,6 +187,7 @@ const Step2: React.FC = () => {
                           type="radio"
                           name={`contactType-${index}`}
                           value={type.value}
+                        disabled
                           checked={contact.contactType === type.value}
                           onChange={(e) => handleInputChange(index, "contactType", e.target.value)}
                           className="w-4 h-4 text-ceruleanBlue-600 border-stormGray-300 focus:ring-ceruleanBlue-500"

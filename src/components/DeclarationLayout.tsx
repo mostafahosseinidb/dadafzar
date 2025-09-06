@@ -1,7 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import { useDeclaration } from '../contexts/DeclarationContext';
 
 interface DeclarationLayoutProps {
   children: React.ReactNode;
@@ -11,27 +9,8 @@ interface DeclarationLayoutProps {
 
 const DeclarationLayout: React.FC<DeclarationLayoutProps> = ({ 
   children, 
-  currentStep, 
-  totalSteps = 7 
+  currentStep
 }) => {
-  const navigate = useNavigate();
-  const { declarationData } = useDeclaration();
-
-  const stepTitles = [
-    "اطلاعات شرکت",
-    "مخاطب", 
-    "متن اظهارنامه",
-    "تایید و بررسی",
-    "پرداخت",
-    "ارسال کد",
-    "فایل نهایی"
-  ];
-
-  const handleClose = () => {
-    if (window.confirm("آیا مطمئن هستید که می‌خواهید از این صفحه خارج شوید؟ تمام اطلاعات وارد شده از بین خواهد رفت.")) {
-      navigate("/declaration");
-    }
-  };
 
   return (
     <div className="min-h-screen p-8">
