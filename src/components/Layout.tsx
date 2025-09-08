@@ -133,7 +133,7 @@ const Layout: React.FC = () => {
             </svg>
           </Link>
           <Link
-            to={""}
+            to="/companies"
             className="self-stretch p-2.5 bg-white rounded-[10px] inline-flex justify-between items-center"
           >
             <div className="justify-start text-sm font-medium text-Black ">
@@ -236,7 +236,7 @@ const Layout: React.FC = () => {
                 </svg>
               </div>
               <p className="justify-start text-sm font-medium text-black ">
-                ادمین
+                کاربر
               </p>
             </div>
             {isLoading ? (
@@ -283,7 +283,7 @@ const Layout: React.FC = () => {
             <div className="p-2.5 bg-stormGray-50 rounded-[10px] flex justify-start items-center gap-3.5">
               <div className="flex justify-center items-center gap-2.5">
                 <span className="justify-start text-sm font-medium text-black ">
-                  شرکت مینو دشت گلستان
+                شرکت ثبت نشده است
                 </span>
               </div>
 
