@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const baseURL = import.meta.env.VITE_API_URL || 'https://stg-service.dadafzar.com/api';
+const baseURL = import.meta.env.VITE_API_URL || 'https://service.dadafzar.com/api';
 
 const axiosInstance = axios.create({
   baseURL,
